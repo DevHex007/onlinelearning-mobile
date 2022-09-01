@@ -1,0 +1,91 @@
+  const headerSharedValue = useSharedValue(80);
+
+
+
+    //Render
+  
+    function renderHeader() {
+  
+      const inputRange = [0, HEADER_HEIGHT - 50];
+  
+      headerSharedValue.value = withDelay(500,
+          withTiming(0,{
+            duration: 500
+          })
+        );
+  
+       const headerFadeAnimatedStyle = useAnimatedStyle(() => {
+          return {
+            opacity: interpolate(headerSharedValue.value,
+              [80, 0], [0, 1])
+          }
+        });
+  
+       const headerTranslateAnimatedStyle = useAnimatedStyle(() => {
+          return{
+            transform:[{
+              translateY: headerSharedValue.value
+            }]
+          }
+        });
+  
+     const headerHeightAnimatedStyle = useAnimatedStyle(() => {
+          return {
+            height: interpolate(scrollY.value, inputRange,
+              [HEADER_HEIGHT, 120], Extrapolate.CLAMP)
+          }
+        }); 
+      
+          const headerHeightOnScrollAnimatedStyle = useAnimatedStyle(() => {
+          return {
+            opacity: interpolate(scrollY.value, [80, 0], [0, 1], Extrapolate.CLAMP),
+            transform: [{
+              translateY: interpolate(scrollY.value, inputRange, [0, 200], Extrapolate.CLAMP)
+            }]
+          }
+        })
+  
+         const headerShowOnScrollAnimatedStyle = useAnimatedStyle(() => {
+        return {
+          opacity: interpolate(scrollY.value, [80, 0],
+            [1, 0], Extrapolate.CLAMP),
+            transform: [
+              {
+                translateY: interpolate(scrollY.value,
+                  inputRange, [50, 130], Extrapolate.CLAMP)
+              }
+            ]
+        }
+      })
+-=======================================
+  
+
+  
+
+  
+  const CourseListing = ({ navigation, route}) => {
+   
+  
+    const filterModalSharedValue1 = useSharedValue(SIZES.height);
+    const filterModalSharedValue2 = useSharedValue(SIZES.height);
+
+  
+
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: COLORS.white
+        }}
+      >
+
+        {/** Header */}
+        {renderHeader()}
+
+      </View>
+    );
+  };
+
+  
+  export default CourseListing;
+  
